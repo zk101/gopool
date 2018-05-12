@@ -3,6 +3,7 @@ package gopool
 import "testing"
 
 // TestQueue
+// queueTask select will randomly choose between starting a daemon and using the queue, so test coverage is not always 100%
 func TestQueue(t *testing.T) {
 	service, err := NewService(nil, nil)
 	if err != nil {
