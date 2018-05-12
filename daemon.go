@@ -8,8 +8,15 @@ import (
 func (s *Service) daemon(task Task) {
 	s.wg.Add(1)
 
+	var localData LocalData
+
 	defer func() {
 		recover()
+
+		if localData != nil {
+			localData.Stop()
+		}
+
 		<-s.register
 		s.wg.Done()
 	}()
@@ -22,15 +29,13 @@ func (s *Service) daemon(task Task) {
 	monitorChan := make(chan bool, 1)
 	loopControl := true
 
-	// Sort out LocalData
-	var localData LocalData
-
+	// Create and start LocalData if applicable
 	if s.localDataFactory != nil {
 		localData = s.localDataFactory()
 	}
 
 	if localData != nil {
-		if err := localData.Setup(); err != nil {
+		if err := localData.Start(); err != nil {
 			if task != nil {
 				task.RunStatus(false)
 			}

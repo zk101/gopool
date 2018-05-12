@@ -18,12 +18,14 @@ type testLocalData struct {
 	forceError bool
 }
 
-func (tld *testLocalData) Setup() error {
+func (tld *testLocalData) Start() error {
 	if tld.forceError {
 		return errors.New("forcing a localdata setup error")
 	}
 
 	return nil
 }
+
+func (tld *testLocalData) Stop() {}
 
 // EOF

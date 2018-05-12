@@ -7,9 +7,13 @@ type LocalDataFactory func() LocalData
 
 // LocalData is an interface for setting up persistant data local to a daemon
 type LocalData interface {
-	// Setup is called to allow for any local data processes to occur
+	// Start is called to setup and start up any data required for processing tasks
 	// An error from this method will cause the daemon to exit
-	Setup() error
+	Start() error
+
+	// Stop is called when a daemon terminates cleanly to close down any services and perform any cleanup
+	// Stop does not return an error as doing so is rather redundant.  The implementation should deal with that
+	Stop()
 }
 
 // EOF

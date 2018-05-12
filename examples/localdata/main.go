@@ -18,11 +18,13 @@ type exampleLocalData struct {
 	count int
 }
 
-func (eld *exampleLocalData) Setup() error {
+func (eld *exampleLocalData) Start() error {
 	eld.count = 10
 
 	return nil
 }
+
+func (eld *exampleLocalData) Stop() {}
 
 /*
   gopool.Task implementation
